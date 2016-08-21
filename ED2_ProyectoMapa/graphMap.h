@@ -22,21 +22,21 @@ using namespace std;
 class GraphMap{
 private:
     int g_adjacency[NUM_VERT][NUM_VERT];
-    int g_costMat[NUM_VERT][NUM_VERT];
+    int g_DistanceMat[NUM_VERT][NUM_VERT];
     string g_vertices[NUM_VERT];
     string g_arcs[NUM_ARCS];
-    string g_cost[NUM_ARCS];
+    string g_distance[NUM_ARCS];
 public:
     GraphMap(void);
     void initVertices(void);
     void initArcs(void);
     void initCost(void);
     void initAdjacencyMatrix();
-    void initCostMatrix();
+    void initDistanceMatrix();
     void fillAdjacencyMatrix();
-    void fillCostMatrix();
+    void fillDistanceMatrix();
     void printAdjacencyMatrix();
-    void printCostMatrix();
+    void printDistanceMatrix();
     int getVertIndex(string vertName);
     string getVertName(int vertIdx);
 };

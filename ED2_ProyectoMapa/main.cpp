@@ -22,9 +22,9 @@ int main(int argc, char** argv) {
     map->initAdjacencyMatrix();
     map->fillAdjacencyMatrix();
     map->printAdjacencyMatrix();
-    map->initCostMatrix();
-    map->fillCostMatrix();
-    map->printCostMatrix();
+    map->initDistanceMatrix();
+    map->fillDistanceMatrix();
+    map->printDistanceMatrix();
     return 0;
 }
 

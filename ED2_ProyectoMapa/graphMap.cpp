@@ -73,36 +73,36 @@ void GraphMap::initArcs() {
 }
 
 void GraphMap::initCost() {
-    g_cost[0] = "50";
-    g_cost[1] = "40";
-    g_cost[2] = "40";
-    g_cost[3] = "45";
-    g_cost[4] = "30";
-    g_cost[5] = "25";
-    g_cost[6] = "15";
-    g_cost[7] = "25";
-    g_cost[8] = "30";
-    g_cost[9] = "35";
-    g_cost[10] = "15";
-    g_cost[11] = "15";
-    g_cost[12] = "15";
-    g_cost[13] = "25";
-    g_cost[14] = "20";
-    g_cost[15] = "15";
-    g_cost[16] = "15";
-    g_cost[17] = "15";
-    g_cost[18] = "15";
-    g_cost[19] = "30";
-    g_cost[20] = "30";
-    g_cost[21] = "20";
-    g_cost[22] = "15";
-    g_cost[23] = "45";
-    g_cost[24] = "35";
-    g_cost[25] = "30";
-    g_cost[26] = "20";
-    g_cost[27] = "15";
-    g_cost[28] = "25";
-    g_cost[29] = "35";
+    g_distance[0] = "50";
+    g_distance[1] = "40";
+    g_distance[2] = "40";
+    g_distance[3] = "45";
+    g_distance[4] = "30";
+    g_distance[5] = "25";
+    g_distance[6] = "15";
+    g_distance[7] = "25";
+    g_distance[8] = "30";
+    g_distance[9] = "35";
+    g_distance[10] = "15";
+    g_distance[11] = "15";
+    g_distance[12] = "15";
+    g_distance[13] = "25";
+    g_distance[14] = "20";
+    g_distance[15] = "15";
+    g_distance[16] = "15";
+    g_distance[17] = "15";
+    g_distance[18] = "15";
+    g_distance[19] = "30";
+    g_distance[20] = "30";
+    g_distance[21] = "20";
+    g_distance[22] = "15";
+    g_distance[23] = "45";
+    g_distance[24] = "35";
+    g_distance[25] = "30";
+    g_distance[26] = "20";
+    g_distance[27] = "15";
+    g_distance[28] = "25";
+    g_distance[29] = "35";
 }
 
 void GraphMap::initAdjacencyMatrix() {
@@ -114,14 +114,14 @@ void GraphMap::initAdjacencyMatrix() {
     }
 }
 
-void GraphMap::initCostMatrix()
+void GraphMap::initDistanceMatrix()
 {
     int i, j;
     for (i = 0; i < NUM_VERT; i++)
     {
         for (j = 0; j < NUM_VERT; j++)
         {
-            g_costMat[i][j] = INFINITE;
+            g_DistanceMat[i][j] = INFINITE;
         }
     }
 }
@@ -143,7 +143,7 @@ string GraphMap::getVertName(int vertIdx) {
         return "";
 }
 
-void GraphMap::fillCostMatrix()
+void GraphMap::fillDistanceMatrix()
 {
     int i, j;
     for (i = 0; i < NUM_ARCS; i++)
@@ -151,13 +151,13 @@ void GraphMap::fillCostMatrix()
         // Get the origin and destiny vertices from the arc definition
         string orig = g_arcs[i].substr(0, g_arcs[i].find("-"));
         string dest = g_arcs[i].substr(g_arcs[i].find("-") + 1);
-        string cost = g_cost[i];
+        string cost = g_distance[i];
         
         // From the vertices names, get the index associated to the matrix
         int origIdx = getVertIndex(orig);
         int destIdx = getVertIndex(dest);
         
-        g_costMat[origIdx][destIdx] = atoi(cost.c_str());
+        g_DistanceMat[origIdx][destIdx] = atoi(cost.c_str());
     }
 }
 
@@ -177,14 +177,14 @@ void GraphMap::fillAdjacencyMatrix() {
     }
 }
 
-void GraphMap::printCostMatrix()
+void GraphMap::printDistanceMatrix()
 {
     int i, j;
-    cout << "---Cost Matrix---" << endl;
+    cout << "---Distance Matrix---" << endl;
     for (i = 0; i < NUM_VERT; i++)
     {
         for (j = 0; j < NUM_VERT; j++) {
-            cout << g_costMat[i][j] << " ";
+            cout << g_DistanceMat[i][j] << " ";
         }
         cout << endl;
     }
