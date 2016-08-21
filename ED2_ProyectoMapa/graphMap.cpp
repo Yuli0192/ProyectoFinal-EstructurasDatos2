@@ -74,36 +74,36 @@ void GraphMap::initArcs() {
 }
 
 void GraphMap::initCost() {
-    g_distance[0] = "50";
-    g_distance[1] = "40";
-    g_distance[2] = "40";
-    g_distance[3] = "45";
-    g_distance[4] = "30";
-    g_distance[5] = "25";
-    g_distance[6] = "15";
-    g_distance[7] = "25";
-    g_distance[8] = "30";
-    g_distance[9] = "35";
-    g_distance[10] = "15";
-    g_distance[11] = "15";
-    g_distance[12] = "15";
-    g_distance[13] = "25";
-    g_distance[14] = "20";
-    g_distance[15] = "15";
-    g_distance[16] = "15";
-    g_distance[17] = "15";
-    g_distance[18] = "15";
-    g_distance[19] = "30";
-    g_distance[20] = "30";
-    g_distance[21] = "20";
-    g_distance[22] = "15";
-    g_distance[23] = "45";
-    g_distance[24] = "35";
-    g_distance[25] = "30";
-    g_distance[26] = "20";
-    g_distance[27] = "15";
-    g_distance[28] = "25";
-    g_distance[29] = "35";
+    g_distance[0] = "20";
+    g_distance[1] = "25";
+    g_distance[2] = "25";
+    g_distance[3] = "30";
+    g_distance[4] = "15";
+    g_distance[5] = "15";
+    g_distance[6] = "5";
+    g_distance[7] = "15";
+    g_distance[8] = "20";
+    g_distance[9] = "20";
+    g_distance[10] = "5";
+    g_distance[11] = "5";
+    g_distance[12] = "5";
+    g_distance[13] = "15";
+    g_distance[14] = "10";
+    g_distance[15] = "5";
+    g_distance[16] = "5";
+    g_distance[17] = "5";
+    g_distance[18] = "5";
+    g_distance[19] = "15";
+    g_distance[20] = "15";
+    g_distance[21] = "10";
+    g_distance[22] = "5";
+    g_distance[23] = "25";
+    g_distance[24] = "20";
+    g_distance[25] = "15";
+    g_distance[26] = "10";
+    g_distance[27] = "5";
+    g_distance[28] = "15";
+    g_distance[29] = "20";
 }
 
 void GraphMap::initAdjacencyMatrix() {
@@ -175,6 +175,11 @@ void GraphMap::fillAdjacencyMatrix() {
 
 void GraphMap::printDistanceMatrix() {
     int i, j;
+    cout << "---------------Locations-----------" << endl;
+    for (i = 0; i < NUM_VERT; i++) {
+
+        cout << setw(3) << i + 1 << ") " << g_vertices[i] << endl;
+    }
     cout << "----------------------------------Distance Matrix---------------------------------" << endl;
     cout << "   ";
     for (i = 0; i < NUM_VERT; i++) {
@@ -227,3 +232,30 @@ void GraphMap::printAdjacencyMatrix() {
     }
     cout << endl;
 }
+
+void GraphMap::shortestPath(string orig, string dest)//takes the route of shortest paths between vertices
+{
+    int i, j, k;
+    int a[8][8];
+    for (i = 1; i <= 7; i++)
+        for (j = 1; j <= 7; j++) {
+            a[i][j] = g_DistanceMat[i][j];
+            p[i][j] = 0;
+        }
+    for (i = 1; i <= 7; i++)
+        a[i][i] = 0;
+    for (k = 1; k <= 7; k++)
+        for (i = 1; i <= 7; i++)
+            for (j = 1; j <= 7; j++)
+                if ((a[i][k] + a[k][j])<(a[i][j])) {
+                    a[i][j] = a[i][k] + a[k][j];
+                    p[i][j] = k;
+                }
+
+    for (i = 0; i < 7; i++) {
+        for (j = 0; j < 7; j++) {
+            cout << setw(3) << p[i][j] << " ";
+        }
+        cout << endl;
+    }
+};

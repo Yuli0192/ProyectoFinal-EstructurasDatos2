@@ -11,20 +11,57 @@
  */
 
 #include <cstdlib>
+#include <iostream>
 #include "graphMap.h"
+
 using namespace std;
+
+void showMenu(void);
 
 /*
  * 
  */
-int main(int argc, char** argv) {
+int main(void) {
+    // Initialization routines
     GraphMap *map = new GraphMap();
     map->initAdjacencyMatrix();
     map->fillAdjacencyMatrix();
-    map->printAdjacencyMatrix();
     map->initDistanceMatrix();
     map->fillDistanceMatrix();
-    map->printDistanceMatrix();
+
+    int resp;
+    int keep = true;
+    while (keep) {
+        showMenu();
+        cin >> resp;
+        switch (resp) {
+            case 1:
+                //Se ingresa el metodo de buscar ubicacion
+                break;
+            case 2:
+                //map->shortestPath();
+                break;
+            case 3:
+                map->printAdjacencyMatrix();
+                break;
+            case 4:
+                map->printDistanceMatrix();
+                break;
+            case 5:
+                keep = false;
+                break;
+            default:
+                cout << "Valor inválido..." << endl;
+        }
+    }
     return 0;
 }
 
+void showMenu() { //menu
+    cout << "1. Mostrar ubicación" << endl;
+    cout << "2. Mostrar camino mínimo" << endl;
+    cout << "3. Imprimir matriz de adyacencia" << endl;
+    cout << "4. Imprimir matriz de distancia" << endl;
+    cout << "5. Salir" << endl;
+    cout << "Seleccione una opción: ";
+}

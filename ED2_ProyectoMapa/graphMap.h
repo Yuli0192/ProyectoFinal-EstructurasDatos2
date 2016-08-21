@@ -14,7 +14,7 @@
 #define GRAPHMAP_H
 #define NUM_ARCS 30
 #define NUM_VERT 20
-#define INFINITE 8
+#define INFINITE 100
 
 #include <string>
 using namespace std;
@@ -26,6 +26,7 @@ private:
     string g_vertices[NUM_VERT];
     string g_arcs[NUM_ARCS];
     string g_distance[NUM_ARCS];
+    int p[8][8];//se utiliza para sacar los caminos
 public:
     GraphMap(void);
     void initVertices(void);
@@ -39,6 +40,7 @@ public:
     void printDistanceMatrix();
     int getVertIndex(string vertName);
     string getVertName(int vertIdx);
+    void shortestPath(string orig, string dest);
 };
 
 #endif /* GRAPHMAP_H */
