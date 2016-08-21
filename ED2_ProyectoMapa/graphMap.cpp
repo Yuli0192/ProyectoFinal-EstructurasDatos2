@@ -7,6 +7,7 @@
 #include <cstddef>
 #include <cstdlib>
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include "graphMap.h"
 
@@ -114,13 +115,10 @@ void GraphMap::initAdjacencyMatrix() {
     }
 }
 
-void GraphMap::initDistanceMatrix()
-{
+void GraphMap::initDistanceMatrix() {
     int i, j;
-    for (i = 0; i < NUM_VERT; i++)
-    {
-        for (j = 0; j < NUM_VERT; j++)
-        {
+    for (i = 0; i < NUM_VERT; i++) {
+        for (j = 0; j < NUM_VERT; j++) {
             g_DistanceMat[i][j] = INFINITE;
         }
     }
@@ -143,20 +141,18 @@ string GraphMap::getVertName(int vertIdx) {
         return "";
 }
 
-void GraphMap::fillDistanceMatrix()
-{
+void GraphMap::fillDistanceMatrix() {
     int i, j;
-    for (i = 0; i < NUM_ARCS; i++)
-    {
+    for (i = 0; i < NUM_ARCS; i++) {
         // Get the origin and destiny vertices from the arc definition
         string orig = g_arcs[i].substr(0, g_arcs[i].find("-"));
         string dest = g_arcs[i].substr(g_arcs[i].find("-") + 1);
         string cost = g_distance[i];
-        
+
         // From the vertices names, get the index associated to the matrix
         int origIdx = getVertIndex(orig);
         int destIdx = getVertIndex(dest);
-        
+
         g_DistanceMat[origIdx][destIdx] = atoi(cost.c_str());
     }
 }
@@ -177,25 +173,55 @@ void GraphMap::fillAdjacencyMatrix() {
     }
 }
 
-void GraphMap::printDistanceMatrix()
-{
+void GraphMap::printDistanceMatrix() {
     int i, j;
-    cout << "---Distance Matrix---" << endl;
-    for (i = 0; i < NUM_VERT; i++)
-    {
+    cout << "----------------------------------Distance Matrix---------------------------------" << endl;
+    cout << "   ";
+    for (i = 0; i < NUM_VERT; i++) {
+
+        cout << setw(3) << i + 1 << " ";
+    }
+    cout << endl;
+    cout << "   " << "-------------------------------------------------------------------------------" << endl;
+    for (i = 0; i < NUM_VERT; i++) {
+        cout << i + 1;
+        if (i < 9) {
+            cout << " ";
+        }
+        cout << "|";
         for (j = 0; j < NUM_VERT; j++) {
-            cout << g_DistanceMat[i][j] << " ";
+            cout << setw(3) << g_DistanceMat[i][j] << " ";
         }
         cout << endl;
     }
     cout << endl;
 }
+
 void GraphMap::printAdjacencyMatrix() {
     int i, j;
-    cout << "---Adjacency Matrix---" << endl;
+
+    cout << "---------------Locations-----------" << endl;
     for (i = 0; i < NUM_VERT; i++) {
+
+        cout << setw(3) << i + 1 << ") " << g_vertices[i] << endl;
+    }
+    cout << "----------------------------------Adjacency Matrix---------------------------------" << endl;
+
+    cout << "   ";
+    for (i = 0; i < NUM_VERT; i++) {
+
+        cout << setw(3) << i + 1 << " ";
+    }
+    cout << endl;
+    cout << "   " << "-------------------------------------------------------------------------------" << endl;
+    for (i = 0; i < NUM_VERT; i++) {
+        cout << i + 1;
+        if (i < 9) {
+            cout << " ";
+        }
+        cout << "|";
         for (j = 0; j < NUM_VERT; j++) {
-            cout << g_adjacency[i][j] << " ";
+            cout << setw(3) << g_adjacency[i][j] << " ";
         }
         cout << endl;
     }
