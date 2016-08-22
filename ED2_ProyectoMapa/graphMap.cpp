@@ -258,8 +258,15 @@ void GraphMap::shortestPath(int orig, int dest)//takes the route of shortest pat
     int startnode = orig;
     int endnode = dest;
 
-    int cost[MAX][MAX], distance[MAX], pred[MAX];
-    int visited[MAX], count, mindistance, nextnode, i, j;
+    int cost[MAX][MAX];
+    int distance[MAX];
+    int pred[MAX];
+    int visited[MAX];
+    int count;
+    int mindistance;
+    int nextnode;
+    int i;
+    int j;
     int n = MAX;
 
     //pred[] stores the predecessor of each node
@@ -304,32 +311,34 @@ void GraphMap::shortestPath(int orig, int dest)//takes the route of shortest pat
                 }
         count++;
     }
-
-    printf("\nDistancia mínima desde el nodo %d al %d = %d", startnode + 1, endnode + 1, distance[endnode]);
-    printf("\nCamino mínimo=%d", endnode + 1);
-
+    cout << "--------------------------------------------------------------" << endl;
+    cout << "La distancia mínima desde el " << getVertName(startnode) << " al " << getVertName(endnode) << " son: " << distance[endnode] << " metros." << endl;
+    
+    cout << "El camino mínimo = " << endnode + 1;
+    
     j = endnode;
     do {
         j = pred[j];
-        printf("<-%d", j + 1);
+        cout << "<-" << j + 1;
     } while (j != startnode);
-    printf("\n");
+    cout << endl;
+    cout << "--------------------------------------------------------------" << endl;
 };
 
 void GraphMap::printAdjacentLocations(int vertIndex)//show the adjacent locations
 {
     int i;
     string vertName = g_vertices[vertIndex];
-
-    cout << " Las ubicaciones adyacentes de " << vertName << " son: "<< endl;
+    cout << "--------------------------------------------------------------" << endl;
+    cout << " Las ubicaciones adyacentes de " << vertName << " son: " << endl;
 
     for (i = 0; i < NUM_VERT; i++) {
         if (g_adjacency[vertIndex][i] == 1) {
-            cout << "-" << getVertName(i) << endl;
+            cout << "  -" << getVertName(i) << endl;
         }
     }
 
-    cout << endl;
+    cout << "--------------------------------------------------------------" << endl;
 }
 
 void GraphMap::printLocations()//show the locations

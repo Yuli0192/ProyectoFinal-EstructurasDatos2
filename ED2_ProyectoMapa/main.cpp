@@ -52,7 +52,7 @@ int main(void) {
                 map->printLocations();
                 cout << "Seleccione la ubicación que quiere ver sus ubicaciones adyacentes: ";
                 cin >> origLocation;
-                map->printAdjacentLocations(origLocation-1);
+                map->printAdjacentLocations(origLocation - 1);
                 break;
             case 4:
                 map->printAdjacencyMatrix();
