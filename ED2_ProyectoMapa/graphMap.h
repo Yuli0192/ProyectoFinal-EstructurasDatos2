@@ -26,7 +26,7 @@ private:
     string g_vertices[NUM_VERT];
     string g_arcs[NUM_ARCS];
     string g_distance[NUM_ARCS];
-    int p[8][8];//se utiliza para sacar los caminos
+    
 public:
     GraphMap(void);
     void initVertices(void);
@@ -40,7 +40,9 @@ public:
     void printDistanceMatrix();
     int getVertIndex(string vertName);
     string getVertName(int vertIdx);
-    void shortestPath(string orig, string dest);
+    void shortestPath(int orig, int dest);
+    void printAdjacentLocations(int vertIndex);
+    void printLocations(void);
 };
 
 #endif /* GRAPHMAP_H */

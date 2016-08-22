@@ -30,6 +30,8 @@ int main(void) {
     map->fillDistanceMatrix();
 
     int resp;
+    int origLocation;
+    int destLocation;
     int keep = true;
     while (keep) {
         showMenu();
@@ -39,15 +41,26 @@ int main(void) {
                 //Se ingresa el metodo de buscar ubicacion
                 break;
             case 2:
-                map->shortestPath("A", "B");
+                map->printLocations();
+                cout << "Seleccione la ubicación origen: ";
+                cin >> origLocation;
+                cout << "Seleccione la ubicación destino: ";
+                cin >> destLocation;
+                map->shortestPath(origLocation - 1, destLocation - 1);
                 break;
             case 3:
-                map->printAdjacencyMatrix();
+                map->printLocations();
+                cout << "Seleccione la ubicación que quiere ver sus ubicaciones adyacentes: ";
+                cin >> origLocation;
+                map->printAdjacentLocations(origLocation-1);
                 break;
             case 4:
-                map->printDistanceMatrix();
+                map->printAdjacencyMatrix();
                 break;
             case 5:
+                map->printDistanceMatrix();
+                break;
+            case 6:
                 keep = false;
                 break;
             default:
@@ -58,10 +71,11 @@ int main(void) {
 }
 
 void showMenu() { //menu
-    cout << "1. Mostrar ubicación" << endl;
+    cout << "1. Mostrar ubicación **En construcción" << endl;
     cout << "2. Mostrar camino mínimo" << endl;
-    cout << "3. Imprimir matriz de adyacencia" << endl;
-    cout << "4. Imprimir matriz de distancia" << endl;
-    cout << "5. Salir" << endl;
+    cout << "3. Mostrar ubicaciones adyacentes" << endl;
+    cout << "4. Imprimir matriz de adyacencia" << endl;
+    cout << "5. Imprimir matriz de distancia" << endl;
+    cout << "6. Salir" << endl;
     cout << "Seleccione una opción: ";
 }

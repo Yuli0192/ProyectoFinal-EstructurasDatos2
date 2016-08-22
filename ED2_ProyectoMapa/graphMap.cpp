@@ -251,71 +251,93 @@ void GraphMap::printAdjacencyMatrix() {
 
 // Reference implementation taken from:
 // http://www.thecrazyprogrammer.com/2014/03/dijkstra-algorithm-for-finding-shortest-path-of-a-graph.html
-void GraphMap::shortestPath(string orig, string dest)//takes the route of shortest paths between vertices
+
+void GraphMap::shortestPath(int orig, int dest)//takes the route of shortest paths between vertices
 {
     // TODO: Grab these from the user.
-    int startnode = 15;
-    int endnode = 18;
-    
-    int cost[MAX][MAX],distance[MAX],pred[MAX];
-    int visited[MAX],count,mindistance,nextnode,i,j;
+    int startnode = orig;
+    int endnode = dest;
+
+    int cost[MAX][MAX], distance[MAX], pred[MAX];
+    int visited[MAX], count, mindistance, nextnode, i, j;
     int n = MAX;
-    
+
     //pred[] stores the predecessor of each node
     //count gives the number of nodes seen so far
     //create the cost matrix
-    for(i=0;i<n;i++)
-        for(j=0;j<n;j++)
+    for (i = 0; i < n; i++)
+        for (j = 0; j < n; j++)
             //if(G[i][j]==0)
-            if(g_DistanceMat[i][j]==INFINITY)
-                cost[i][j]=INFINITY;
+            if (g_DistanceMat[i][j] == INFINITY)
+                cost[i][j] = INFINITY;
             else
-                cost[i][j]=g_DistanceMat[i][j];
-    
+                cost[i][j] = g_DistanceMat[i][j];
+
     //initialize pred[],distance[] and visited[]
-    for(i=0;i<n;i++)
-    {
-        distance[i]=cost[startnode][i];
-        pred[i]=startnode;
-        visited[i]=0;
+    for (i = 0; i < n; i++) {
+        distance[i] = cost[startnode][i];
+        pred[i] = startnode;
+        visited[i] = 0;
     }
-    
-    distance[startnode]=0;
-    visited[startnode]=1;
-    count=1;
-    
-    while(count<n-1)
-    {
-        mindistance=INFINITY;
-        
+
+    distance[startnode] = 0;
+    visited[startnode] = 1;
+    count = 1;
+
+    while (count < n - 1) {
+        mindistance = INFINITY;
+
         //nextnode gives the node at minimum distance
-        for(i=0;i<n;i++)
-            if(distance[i]<mindistance&&!visited[i])
-            {
-                mindistance=distance[i];
-                nextnode=i;
+        for (i = 0; i < n; i++)
+            if (distance[i] < mindistance&&!visited[i]) {
+                mindistance = distance[i];
+                nextnode = i;
             }
-            
-            //check if a better path exists through nextnode            
-            visited[nextnode]=1;
-            for(i=0;i<n;i++)
-                if(!visited[i])
-                    if(mindistance+cost[nextnode][i]<distance[i])
-                    {
-                        distance[i]=mindistance+cost[nextnode][i];
-                        pred[i]=nextnode;
-                    }
+
+        //check if a better path exists through nextnode            
+        visited[nextnode] = 1;
+        for (i = 0; i < n; i++)
+            if (!visited[i])
+                if (mindistance + cost[nextnode][i] < distance[i]) {
+                    distance[i] = mindistance + cost[nextnode][i];
+                    pred[i] = nextnode;
+                }
         count++;
     }
-    
-    printf("\nDistancia mínima desde el nodo %d al %d = %d",startnode+1,endnode+1,distance[endnode]);
-    printf("\nCamino mínimo=%d",endnode+1);
 
-    j=endnode;
-    do
-    {
-        j=pred[j];
-        printf("<-%d",j+1);
-    }while(j!=startnode);
+    printf("\nDistancia mínima desde el nodo %d al %d = %d", startnode + 1, endnode + 1, distance[endnode]);
+    printf("\nCamino mínimo=%d", endnode + 1);
+
+    j = endnode;
+    do {
+        j = pred[j];
+        printf("<-%d", j + 1);
+    } while (j != startnode);
     printf("\n");
 };
+
+void GraphMap::printAdjacentLocations(int vertIndex)//show the adjacent locations
+{
+    int i;
+    string vertName = g_vertices[vertIndex];
+
+    cout << " Las ubicaciones adyacentes de " << vertName << " son: "<< endl;
+
+    for (i = 0; i < NUM_VERT; i++) {
+        if (g_adjacency[vertIndex][i] == 1) {
+            cout << "-" << getVertName(i) << endl;
+        }
+    }
+
+    cout << endl;
+}
+
+void GraphMap::printLocations()//show the locations
+{
+    int i;
+    cout << "---------------Locations-----------" << endl;
+    for (i = 0; i < NUM_VERT; i++) {
+
+        cout << setw(3) << i + 1 << ") " << g_vertices[i] << endl;
+    }
+}
