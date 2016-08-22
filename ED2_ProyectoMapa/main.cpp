@@ -39,7 +39,7 @@ int main(void) {
                 //Se ingresa el metodo de buscar ubicacion
                 break;
             case 2:
-                //map->shortestPath();
+                map->shortestPath("A", "B");
                 break;
             case 3:
                 map->printAdjacencyMatrix();

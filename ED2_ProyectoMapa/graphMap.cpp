@@ -4,12 +4,16 @@
  * and open the template in the editor.
  */
 
+#include <stdio.h>
 #include <cstddef>
 #include <cstdlib>
 #include <iostream>
 #include <iomanip>
 #include <string>
 #include "graphMap.h"
+
+#define INFINITY 100
+#define MAX 20
 
 GraphMap::GraphMap() {
     this->initVertices();
@@ -71,6 +75,12 @@ void GraphMap::initArcs() {
     g_arcs[27] = "Dept TI-Lab 1";
     g_arcs[28] = "Dept TI-Sala Reuniones";
     g_arcs[29] = "Dept Contabilidad-Dept Decanatura";
+    g_arcs[30] = "Dept Contabilidad-Sala Reuniones";
+    g_arcs[31] = "Dept Cobro-Lab 7";
+    g_arcs[32] = "Lab 7-Lab 6";
+    g_arcs[33] = "Lab 5-Lab 4";
+    g_arcs[34] = "Lab 6-Lab 10";
+    g_arcs[35] = "Lab 2-Baños";
 }
 
 void GraphMap::initCost() {
@@ -104,6 +114,12 @@ void GraphMap::initCost() {
     g_distance[27] = "5";
     g_distance[28] = "15";
     g_distance[29] = "20";
+    g_distance[30] = "2";
+    g_distance[31] = "1";
+    g_distance[32] = "1";
+    g_distance[33] = "1";
+    g_distance[34] = "8";
+    g_distance[35] = "9";
 }
 
 void GraphMap::initAdjacencyMatrix() {
@@ -233,29 +249,73 @@ void GraphMap::printAdjacencyMatrix() {
     cout << endl;
 }
 
+// Reference implementation taken from:
+// http://www.thecrazyprogrammer.com/2014/03/dijkstra-algorithm-for-finding-shortest-path-of-a-graph.html
 void GraphMap::shortestPath(string orig, string dest)//takes the route of shortest paths between vertices
 {
-    int i, j, k;
-    int a[8][8];
-    for (i = 1; i <= 7; i++)
-        for (j = 1; j <= 7; j++) {
-            a[i][j] = g_DistanceMat[i][j];
-            p[i][j] = 0;
-        }
-    for (i = 1; i <= 7; i++)
-        a[i][i] = 0;
-    for (k = 1; k <= 7; k++)
-        for (i = 1; i <= 7; i++)
-            for (j = 1; j <= 7; j++)
-                if ((a[i][k] + a[k][j])<(a[i][j])) {
-                    a[i][j] = a[i][k] + a[k][j];
-                    p[i][j] = k;
-                }
-
-    for (i = 0; i < 7; i++) {
-        for (j = 0; j < 7; j++) {
-            cout << setw(3) << p[i][j] << " ";
-        }
-        cout << endl;
+    // TODO: Grab these from the user.
+    int startnode = 15;
+    int endnode = 18;
+    
+    int cost[MAX][MAX],distance[MAX],pred[MAX];
+    int visited[MAX],count,mindistance,nextnode,i,j;
+    int n = MAX;
+    
+    //pred[] stores the predecessor of each node
+    //count gives the number of nodes seen so far
+    //create the cost matrix
+    for(i=0;i<n;i++)
+        for(j=0;j<n;j++)
+            //if(G[i][j]==0)
+            if(g_DistanceMat[i][j]==INFINITY)
+                cost[i][j]=INFINITY;
+            else
+                cost[i][j]=g_DistanceMat[i][j];
+    
+    //initialize pred[],distance[] and visited[]
+    for(i=0;i<n;i++)
+    {
+        distance[i]=cost[startnode][i];
+        pred[i]=startnode;
+        visited[i]=0;
     }
+    
+    distance[startnode]=0;
+    visited[startnode]=1;
+    count=1;
+    
+    while(count<n-1)
+    {
+        mindistance=INFINITY;
+        
+        //nextnode gives the node at minimum distance
+        for(i=0;i<n;i++)
+            if(distance[i]<mindistance&&!visited[i])
+            {
+                mindistance=distance[i];
+                nextnode=i;
+            }
+            
+            //check if a better path exists through nextnode            
+            visited[nextnode]=1;
+            for(i=0;i<n;i++)
+                if(!visited[i])
+                    if(mindistance+cost[nextnode][i]<distance[i])
+                    {
+                        distance[i]=mindistance+cost[nextnode][i];
+                        pred[i]=nextnode;
+                    }
+        count++;
+    }
+    
+    printf("\nDistancia mínima desde el nodo %d al %d = %d",startnode+1,endnode+1,distance[endnode]);
+    printf("\nCamino mínimo=%d",endnode+1);
+
+    j=endnode;
+    do
+    {
+        j=pred[j];
+        printf("<-%d",j+1);
+    }while(j!=startnode);
+    printf("\n");
 };

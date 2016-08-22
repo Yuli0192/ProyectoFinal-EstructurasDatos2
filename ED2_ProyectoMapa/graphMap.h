@@ -12,9 +12,9 @@
 
 #ifndef GRAPHMAP_H
 #define GRAPHMAP_H
-#define NUM_ARCS 30
+#define NUM_ARCS 36
 #define NUM_VERT 20
-#define INFINITE 100
+#define INFINITE 999
 
 #include <string>
 using namespace std;
